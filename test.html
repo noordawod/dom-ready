@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>DOM Ready test</title>
+    <style type="text/css">
+      body {
+        display: block;
+        margin: 1em;
+        padding: 0;
+        background-color: #fff;
+        color: #444;
+        font-size: 2em;
+        line-height: 1em;
+      }
+      pre {
+        border: solid 1px #ddd;
+        background-color: #e0e0e0;
+        padding: .5em;
+      }
+    </style>
+    <script type="text/javascript" src="dom-ready.js"></script>
+    <script type="text/javascript">
+      // When DOM is ready, the function is called and
+      // 'document' is passed to it.
+      // 'this' is pointing to current scope ('window', in this case.)
+      domReady(function(document) {
+        var pre = document.getElementById('debug');
+        pre.appendChild(document.createTextNode('\n'));
+        pre.appendChild(document.createTextNode('Dynamically added when DOM is ready.'));
+      });
+    </script>
+  </head>
+  <body>
+    <pre id="debug">Initial text.</pre>
+  </body>
+</html>
