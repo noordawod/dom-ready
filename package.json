@@ -1,0 +1,28 @@
+{
+  "name": "dom-ready",
+  "version": "1.0.4",
+  "description": "A minimalist, cross-browser \"DOM Ready\" event handler.",
+  "main": "dom-ready.js",
+  "scripts": {
+    "test": "echo \"Open test.html in your favorite browser\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noordawod/dom-ready"
+  },
+  "keywords": [
+    "dom",
+    "ready",
+    "handler",
+    "js",
+    "javascript",
+    "minimal",
+    "cross",
+    "browser"
+  ],
+  "author": "Noor Dawod <noor@fine47.com> (https://ello.co/noor-dawod)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noordawod/dom-ready/issues"
+  }
+}
