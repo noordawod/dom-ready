@@ -1,9 +1,9 @@
 /*!
- * DOM Ready v1.0.3
- * https://github.com/fineswap/dom-ready
+ * DOM Ready v1.0.4
+ * https://github.com/noordawod/dom-ready
  *
- * Copyright (C) 2013-2014 Fineswap Blog & App
- * http://fineswap.com/
+ * Copyright (C) 2013-2014 Noor Dawod.
+ * All rights reserved.
  *
  * Released under the MIT license
  * http://en.wikipedia.org/wiki/MIT_License
@@ -27,7 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-;var domReady = (function(window, FALSE) { 
+;var domReady = (function(window, FALSE) {
   'use strict';
 
   var DOCUMENT = 'document',

@@ -44,7 +44,7 @@ Terms of Use
 [MIT License][mitlicense]
 
 [mitlicense]:         http://en.wikipedia.org/wiki/MIT_License                                           "MIT License"
-[testhtml]:           https://raw.github.com/fineswap/dom-ready/master/test.html                "test.html"
+[testhtml]:           https://raw.github.com/noordawod/dom-ready/master/test.html                        "test.html"
 [domready]:           https://code.google.com/p/domready/                                                "domready at Google Code"
 [iecontentloaded]:    http://javascript.nwbox.com/IEContentLoaded/                                       "IEContentLoaded by Diego Perini"
 [ondomcontentloaded]: http://javascript.ru/tutorial/events/ondomcontentloaded                            "onDOMContentLoaded"
