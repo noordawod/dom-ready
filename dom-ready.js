@@ -34,7 +34,6 @@
       ELEMENT = 'Element',
       DOSCROLL = 'doScroll',
       CALL = 'call',
-      CALLEE = CALL + 'ee',
       DOMCONTENTLOADED = 'DOMContentLoaded',
       ONREADYSTATECHANGE = 'onreadystatechange',
       LOAD = 'load',
@@ -59,12 +58,12 @@
 
           // Call old onload handler for old browsers.
           if('function' === typeof windowOnLoad)
-            windowOnLoad = windowOnLoad[CALL](window, document);
+            windowOnLoad = windowOnLoad[CALL](window, document, window);
 
           // Call the list of callbacks, each in its own scope.
           // If a callback returns FALSE, stop firing the rest of the callbacks.
           while(FALSE !== windowOnLoad && !!(callback = callbacksList.shift()))
-            windowOnLoad = callback[0][CALL](callback[1], document);
+            windowOnLoad = callback[0][CALL](callback[1], document, window);
 
           // GC.
           callbacksList = null;
@@ -81,57 +80,60 @@
           } catch (e) {
             setTimeout(tryScroll, 50);
           }
+      },
+
+      // Main handler.
+      handler = function(callback) {
+        if(domReady)
+          // DOM already ran once; just run the callback immediately.
+          callback[CALL](this);
+        else {
+          // When first handler is added, attach the cross-browser DOM ready handler.
+          if(!callbacksList.length)
+            // Mature browsers.
+            if(document[ADDEVENTLISTENER])
+              document[ADDEVENTLISTENER](DOMCONTENTLOADED, function() {
+                document[REMOVEEVENTLISTENER](DOMCONTENTLOADED, handler, FALSE);
+                fireCallbacks();
+              }, FALSE);
+
+            // Internet Explorer.
+            else if(document[ATTACHEVENT]) {
+              // IE supports onreadystatechange event.
+              document[ATTACHEVENT](ONREADYSTATECHANGE, function() {
+                if('complete' === document.readyState) {
+                  document[DETACHEVENT](ONREADYSTATECHANGE, handler);
+                  fireCallbacks();
+                }
+              });
+
+              // Very reliable when not inside a frame.
+              if(document[DOCUMENT + ELEMENT][DOSCROLL] && window === window.top)
+                tryScroll();
+
+            // Old browsers.
+            } else if(window[ADDEVENTLISTENER])
+              window[ADDEVENTLISTENER](LOAD, function() {
+                window[REMOVEEVENTLISTENER](LOAD, handler, FALSE);
+                fireCallbacks();
+              }, FALSE);
+            else if(window[ATTACHEVENT])
+              window[ATTACHEVENT](ONLOAD, function() {
+                window[DETACHEVENT](ONLOAD, handler);
+                fireCallbacks();
+              });
+
+            // Historic browsers.
+            else {
+              windowOnLoad = window[ONLOAD];
+              window[ONLOAD] = fireCallbacks;
+            }
+
+          // Queue the callback along with its scope.
+          callbacksList.push([callback, this]);
+        }
       };
 
   // Expose main handler to global scope.
-  return function(callback) {
-    if(domReady)
-      // DOM already ran once; just run the callback immediately.
-      callback[CALL](this);
-    else {
-      // When first handler is added, attach the cross-browser DOM ready handler.
-      if(!callbacksList.length)
-        // Mature browsers.
-        if(document[ADDEVENTLISTENER])
-          document[ADDEVENTLISTENER](DOMCONTENTLOADED, function() {
-            document[REMOVEEVENTLISTENER](DOMCONTENTLOADED, arguments[CALLEE], FALSE);
-            fireCallbacks();
-          }, FALSE);
-
-        // Internet Explorer.
-        else if(document[ATTACHEVENT]) {
-          // IE supports onreadystatechange event.
-          document[ATTACHEVENT](ONREADYSTATECHANGE, function() {
-            if('complete' === document.readyState) {
-              document[DETACHEVENT](ONREADYSTATECHANGE, arguments[CALLEE]);
-              fireCallbacks();
-            }
-          });
-
-          // Very reliable when not inside a frame.
-          if(document[DOCUMENT + ELEMENT][DOSCROLL] && window === window.top)
-            tryScroll();
-
-        // Old browsers.
-        } else if(window[ADDEVENTLISTENER])
-          window[ADDEVENTLISTENER](LOAD, function() {
-            window[REMOVEEVENTLISTENER](LOAD, arguments[CALLEE], FALSE);
-            fireCallbacks();
-          }, FALSE);
-        else if(window[ATTACHEVENT])
-          window[ATTACHEVENT](ONLOAD, function() {
-            window[DETACHEVENT](ONLOAD, arguments[CALLEE]);
-            fireCallbacks();
-          });
-
-        // Historic browsers.
-        else {
-          windowOnLoad = window[ONLOAD];
-          window[ONLOAD] = fireCallbacks;
-        }
-
-      // Queue the callback along with its scope.
-      callbacksList.push([callback, this]);
-    }
-  };
+  return handler;
 })(window, !1);

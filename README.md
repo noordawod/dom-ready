@@ -16,7 +16,7 @@ But it's really very simple, much like the following code snippet:
           // When DOM is ready, this function is called and
           // 'document' is passed to it.
           // 'this' is pointing to current scope ('window', in this case.)
-          domReady(function(document) {
+          domReady(function(document, window) {
             ...
           });
         </script>
