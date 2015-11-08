@@ -1,6 +1,6 @@
 {
   "name": "dom-ready",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A minimalist, cross-browser \"DOM Ready\" event handler.",
   "main": "dom-ready.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "cross",
     "browser"
   ],
-  "author": "Noor Dawod <noor@fine47.com> (https://ello.co/noor-dawod)",
+  "author": "Noor Dawod <noor@fineswap.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/noordawod/dom-ready/issues"
