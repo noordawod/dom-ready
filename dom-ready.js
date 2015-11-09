@@ -1,5 +1,5 @@
 /*!
- * DOM Ready v1.0.5
+ * DOM Ready v1.0.6
  * https://github.com/noordawod/dom-ready
  *
  * Copyright (C) 2013-2014 Noor Dawod.
